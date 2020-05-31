@@ -45,9 +45,9 @@ while True:
             quit()
 
 
-
+    #pygame.draw.rect(window_surface, RED, Game.tetris_shapes[1])
     pygame.display.update()
-    clock.tick(20000)
+    clock.tick(500)
 
 
 
