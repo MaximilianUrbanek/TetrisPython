@@ -22,14 +22,12 @@ window_heigth = 700
 game_width = 300
 game_heigth = 600
 block_size = 30
-window_surface = pygame.display.set_mode((window_width, window_heigth), 0, 32)
+window_surface = pygame.display.set_mode((game_width, game_heigth), 0, 32)
 pygame.display.set_caption("Tetris clone")
 left_corner_x = (window_width - game_width) // 2
 left_corner_y = window_heigth - game_heigth
 
 window_surface.fill(BLACK)
-title = pygame.font.SysFont('arial', bold=1, size=50).render('TETRIS', 1, RED)
-window_surface.blit(title, (left_corner_x + game_width / 2 - (title.get_width() / 2), 30))
 
 # Blocks
 LINE = pygame.Rect(0, 0, 100, 100)
