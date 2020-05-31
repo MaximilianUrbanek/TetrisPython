@@ -17,27 +17,25 @@ BLACK = (  0,   0,   0)
 
 
 # Window settings
-window_width = 800
-window_heigth = 700
-game_width = 300
-game_heigth = 600
+window_width = 300
+window_heigth = 600
 block_size = 30
-window_surface = pygame.display.set_mode((game_width, game_heigth), 0, 32)
+window_surface = pygame.display.set_mode((window_width, window_heigth))
 pygame.display.set_caption("Tetris clone")
-left_corner_x = (window_width - game_width) // 2
-left_corner_y = window_heigth - game_heigth
 
 window_surface.fill(BLACK)
-
 # Blocks
-LINE = pygame.Rect(0, 0, 100, 100)
 
 
 def drawGrid():
-    for x in range(game_width):
-        for y in range(game_heigth):
-            rect = pygame.Rect(x * block_size, y * block_size, block_size, block_size)
+    for x in range(window_width):
+        for y in range(window_heigth):
+            rect = pygame.Rect(x * block_size, y * block_size,
+                               block_size, block_size)
             pygame.draw.rect(window_surface, WHITE, rect, 1)
+
+
+
 
 while True:
     drawGrid()
