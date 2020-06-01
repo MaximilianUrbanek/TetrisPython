@@ -12,6 +12,9 @@ cols = window_heigth // block_size
 # Grid
 grid = [0] * rows * cols
 
+# Score
+score = 0
+
 # Pictures
 pic = []
 for n in range(8):
@@ -156,7 +159,8 @@ def savePosition():
             y = figure.start_y + n % 4
             grid[x * rows + y] = m
 
-def score():
+def deleteRow():
+    deleted_rows = 0
     for col in range(cols):
         for row in range(rows):
             if grid[col*rows+row] == 0:
@@ -164,6 +168,8 @@ def score():
         else:
             del grid[col*rows:col*rows+rows]
             grid[0:0] = [0]*rows
+            deleted_rows += 1
+    return  deleted_rows**2*100
 
 # Events
 shape_down = pg.USEREVENT + 1
@@ -180,7 +186,7 @@ while True:
         if event.type == shape_down:
             if not figure.update(1, 0):
                 savePosition()
-                score()
+                score += deleteRow()
                 figure = shapes.create()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
@@ -200,4 +206,6 @@ while True:
             x = n % rows * block_size
             y = n // rows * block_size
             window_surface.blit(pic[m], (x, y))
+    display_score = pg.font.SysFont('arial', 30).render(f'{score:,}', False, (255, 255, 255))
+    window_surface.blit(display_score, (window_width // 2 - display_score.get_width() // 2, 5))
     pg.display.flip()
