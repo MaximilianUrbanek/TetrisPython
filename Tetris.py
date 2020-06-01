@@ -143,6 +143,8 @@ class shapes():
     start_y = 3
 
     def show(self):
+        """[Displays the Tetris pieces on screen]
+        """
         for n, m in enumerate(self.shape):
             if m > 0:
                 y = (self.start_x + n // 4) * block_size
@@ -150,6 +152,16 @@ class shapes():
                 window_surface.blit(pic[m], (x, y))
 
     def update(self, new_x, new_y):
+        """[Coordinates get updated]
+
+        Arguments:
+            new_x  -- [new_x will be added to start coordinate]
+            new_y  -- [new_y will be added to start coordinate]
+
+        Returns:
+            [True] -- [If coordinates are valid]
+            [False] -- [If coordinates are not valid]
+        """
         if self.valid(self.start_x+new_x, self.start_y+new_y):
             self.start_x += new_x
             self.start_y += new_y
@@ -158,6 +170,11 @@ class shapes():
 
     @staticmethod
     def create():
+        """[Generates single Tetris Pieces on the screen]
+
+        Returns:
+            [shapes] -- [returns shapes from 'shapes' list]
+        """
         for i in range(0,9):
             if(grid[i] != 0):
                 pg.quit()
@@ -171,6 +188,14 @@ class shapes():
 
     @staticmethod
     def rotate(shape):
+        """[Rotation function for the Tetris pieces]
+
+        Arguments:
+            shape[{shape_list}]  -- [Selects the piece which shall be rotated]
+
+        Returns:
+            [shape] -- [Returns the rotated Piece from the multidimensional list]
+        """
         for n in range(len(shape_list)):
             for m in range(len(shape_list[n])):
                 if shape_list[n][m] == shape:
@@ -180,6 +205,16 @@ class shapes():
                         return shapes(shape_list[n][0])
 
     def valid(self, x, y):
+        """[Validates the screen area]
+
+        Arguments:
+            x {[int]} -- [X Coordinate]
+            y {[int]} -- [Y Coordiante]
+
+        Returns:
+            [True] -- [When the Coordinates are valid]
+            [False] -- [When the Coordinates are not valid]
+        """
         for n, m in enumerate(self.shape):
             if m > 0:
                 x1 = x + n // 4
@@ -189,6 +224,8 @@ class shapes():
         return True
 
 def savePosition():
+    """[Locks the Tetris Piece to a position when it collides with another Stone or Border]
+    """
     for n, m in enumerate(figure.shape):
         if m > 0:
             x = figure.start_x + n // 4
@@ -196,6 +233,11 @@ def savePosition():
             grid[x * rows + y] = m
 
 def deleteRow():
+    """[Deletes a row after it is filled and counts the deleted rows for the score]
+
+    Returns:
+        [deleted_rows**2*100] -- [Score Value]
+    """
     deleted_rows = 0
     for col in range(cols):
         for row in range(rows):
@@ -214,6 +256,8 @@ pg.time.set_timer(shape_down, 500)
 figure = shapes.create()
 
 while True:
+    """[Key Event Handling Operations]
+    """
     clock.tick(500)
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -237,11 +281,13 @@ while True:
     window_surface.fill((0, 0, 0))
     figure.show()
 
+    """[Displays the seized game window and the related Score]
+    """
     for n, m in enumerate(grid):
         if m > 0:
             x = n % rows * block_size
             y = n // rows * block_size
-            window_surface.blit(pic[m], (x, y))
+            window_surface.blit(pic[m], (x, y))       
     display_score = pg.font.SysFont('arial', 30).render(f'{score:,}', False, (255, 255, 255))
     window_surface.blit(display_score, (window_width // 2 - display_score.get_width() // 2, 5))
     pg.display.flip()
