@@ -8,7 +8,6 @@
 # Left/Right - Move stone
 # Up - Rotate Stone clockwise
 #
-#
 # Have fun!
 
 # Copyright (c) 2020 "Hakim Assadi", "Maximilian Urbanek"
