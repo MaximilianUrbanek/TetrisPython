@@ -118,7 +118,8 @@ class shapes():
         if self.valid(self.start_x+new_x, self.start_y+new_y):
             self.start_x += new_x
             self.start_y += new_y
-
+            return True
+        return False
 
     @staticmethod
     def create():
@@ -148,6 +149,12 @@ class shapes():
                     return False
         return True
 
+def savePosition():
+    for n, m in enumerate(figure.shape):
+        if m > 0:
+            x = figure.start_x + n // 4
+            y = figure.start_y + n % 4
+            grid[x * rows + y] = m
 
 # Events
 shape_down = pg.USEREVENT + 1
@@ -162,7 +169,9 @@ while True:
             pg.quit()
             quit()
         if event.type == shape_down:
-            figure.update(1, 0)
+            if not figure.update(1, 0):
+                savePosition()
+                figure = shapes.create()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
                 figure.update(0, -1)
