@@ -126,6 +126,10 @@ class shapes():
 
     @staticmethod
     def create():
+        for i in range(0,9):
+            if(grid[i] != 0):
+                pg.quit()
+                quit(f"Game over! Your score was: {score}")
         n = random.randint(0, 6)
         m = random.randint(0, 3)
         l = len(shape_list[n])
