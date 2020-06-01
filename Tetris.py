@@ -119,18 +119,35 @@ class shapes():
         self.start_x += new_x
         self.start_y += new_y
 
-    def create(self):
-        n = random.randint(0,6)
-        m = random.randint(0,3)
+    @staticmethod
+    def create():
+        n = random.randint(0, 6)
+        m = random.randint(0, 3)
         l = len(shape_list[n])
-        if l > m:
+        if m >= l:
             m = 0
-        figure = shapes(shape_list[n][m])
+        return shapes(shape_list[n][m])
+
+    def change(n, m):
+        if len(shape_list[n]) >  m+1:
+            return shapes(shape_list[n][m+1])
+        else:
+            return shapes(shape_list[n][0])
+
+    @staticmethod
+    def rotate(shape):
+        for n in range(len(shape_list)):
+            for m in range(len(shape_list[n])):
+                if shape_list[n][m] == shape:
+                    print(n, m)
+                    return shapes.change(n, m)
 
 
 # Events
 shape_down = pg.USEREVENT+1
 pg.time.set_timer(shape_down, 500)
+
+figure = shapes.create()
 
 while True:
     clock.tick(500)
@@ -148,7 +165,9 @@ while True:
             if event.key == pg.K_DOWN:
                 figure.update(1,0)
             if event.key == pg.K_UP:
-                figure.rotate(1)
+                figure = shapes.rotate(figure.shape)
+
+
 
     window_surface.fill((0,0,0))
     figure.show()
