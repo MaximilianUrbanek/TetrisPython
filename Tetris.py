@@ -156,6 +156,15 @@ def savePosition():
             y = figure.start_y + n % 4
             grid[x * rows + y] = m
 
+def score():
+    for col in range(cols):
+        for row in range(rows):
+            if grid[col*rows+row] == 0:
+                break
+        else:
+            del grid[col*rows:col*rows+rows]
+            grid[0:0] = [0]*rows
+
 # Events
 shape_down = pg.USEREVENT + 1
 pg.time.set_timer(shape_down, 500)
@@ -171,6 +180,7 @@ while True:
         if event.type == shape_down:
             if not figure.update(1, 0):
                 savePosition()
+                score()
                 figure = shapes.create()
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
